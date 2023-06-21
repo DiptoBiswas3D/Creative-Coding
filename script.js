@@ -4,66 +4,49 @@ const ctx = canvas.getContext("2d")
 canvas.width = 400
 canvas.height = 400
 
-class Particle {
-    constructor(shape = "square") {
-        this.x = Math.random() * canvas.width
-        this.y = Math.random() * canvas.height
-        this.speedX = Math.random() * 6 - 3
-        this.speedY = Math.random() * 6 - 3
-        this.edge = 10
-        this.shape = shape
+class Pixel {
+  constructor() {
+    this.x = Math.random() * canvas.width
+    this.y = 0
+    this.speedX = 0
+    this.speedY = Math.random() * 3 + 3
+    this.height = Math.random() * 6 + 6
+    this.width = Math.random() + 1
+  }
+  // Drawing the pixel
+  draw() {
+    ctx.fillRect(this.x, this.y, this.width, this.height)
+  }
+  // Updating the pixel
+  update() {
+    if (this.y > canvas.height) {
+      this.x = Math.random() * canvas.width
+      this.y = 0
+      this.speedY = Math.random() * 3 + 3
+      this.height = Math.random() * 6 + 6
+      this.width = Math.random() + 1
     }
-    // Todo - Draw different particles depending on input, square, circle, etc.
-    // Drawing the particle
-    draw() {
-        ctx.fillRect(this.x, this.y, this.edge, this.edge)
-    }
-    // Updating the particle
-    update() {
-        if (this.y < 0 || this.y + this.edge > canvas.height) {
-            this.speedY = -this.speedY
-        }
-        if (this.x < 0 || this.x + this.edge > canvas.width) {
-            this.speedX = -this.speedX
-        }
-        this.x += this.speedX
-        this.y += this.speedY
-        this.draw()
-    }
+    this.x += this.speedX
+    this.y += this.speedY
+    this.draw()
+  }
 }
 
-let particleArray = []
+let pixelArray = []
 
-// Todo - Particle count should be a user input
-let particleCount = 75
+// Todo - Pixel count should be a user input
+let pixelCount = 1500
 
-for (let i = 0; i < particleCount; i++) {
-    particleArray.push(new Particle())
+for (let i = 0; i < pixelCount; i++) {
+  pixelArray.push(new Pixel())
 }
 
 function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    for (let i = 0; i < particleCount; i++) {
-        particleArray[i].update()
-    }
-    for (let i = 0; i < particleCount; i++) {
-        for (let j = 0; j < particleCount; j++) {
-            if (distance_between_two_points(particleArray[i].x, particleArray[i].y, particleArray[j].x, particleArray[j].y) < 100) {
-                ctx.beginPath()
-                ctx.moveTo(particleArray[i].x, particleArray[i].y)
-                ctx.lineTo(particleArray[j].x, particleArray[j].y)
-                ctx.stroke()
-            }
-        }
-    }
-    requestAnimationFrame(animate)
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  for (let i = 0; i < pixelCount; i++) {
+    pixelArray[i].update()
+  }
+  requestAnimationFrame(animate)
 }
-
 
 animate()
-
-function distance_between_two_points(x1, y1, x2, y2) {
-    const dx = x2 - x1;
-    const dy = y2 - y1;
-    return Math.sqrt(dx * dx + dy * dy);
-}
