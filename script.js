@@ -1,69 +1,94 @@
-const canvas = document.getElementById("canvas")
-const ctx = canvas.getContext("2d")
+// const canvas = document.getElementById("canvas");
+// const ctx = canvas.getContext("2d");
 
-canvas.width = 400
-canvas.height = 400
+// canvas.width = 500;
+// canvas.height = 400;
 
-class Particle {
-    constructor(shape = "square") {
-        this.x = Math.random() * canvas.width
-        this.y = Math.random() * canvas.height
-        this.speedX = Math.random() * 6 - 3
-        this.speedY = Math.random() * 6 - 3
-        this.edge = 10
-        this.shape = shape
-    }
-    // Todo - Draw different particles depending on input, square, circle, etc.
-    // Drawing the particle
-    draw() {
-        ctx.fillRect(this.x, this.y, this.edge, this.edge)
-    }
-    // Updating the particle
-    update() {
-        if (this.y < 0 || this.y + this.edge > canvas.height) {
-            this.speedY = -this.speedY
-        }
-        if (this.x < 0 || this.x + this.edge > canvas.width) {
-            this.speedX = -this.speedX
-        }
-        this.x += this.speedX
-        this.y += this.speedY
-        this.draw()
-    }
-}
+// // 1. Rectangle
+// ctx.fillRect(30, 30, 150, 80);
+// ctx.fillStyle = "green";
+// ctx.fillRect(200, 50, 150, 70);
 
-let particleArray = []
+// ctx.lineWidth = 5;
+// ctx.strokeStyle = "blue";
+// ctx.strokeRect(50, 150, 150, 80);
 
-// Todo - Particle count should be a user input
-let particleCount = 75
+// ctx.clearRect(210, 60, 130, 50);
 
-for (let i = 0; i < particleCount; i++) {
-    particleArray.push(new Particle())
-}
+// // 2. Path
+// ctx.beginPath();
+// ctx.moveTo(30, 30);
+// ctx.lineTo(180, 30);
+// ctx.lineTo(180, 110);
+// ctx.lineTo(30, 110);
+// ctx.closePath();
 
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    for (let i = 0; i < particleCount; i++) {
-        particleArray[i].update()
-    }
-    for (let i = 0; i < particleCount; i++) {
-        for (let j = 0; j < particleCount; j++) {
-            if (distance_between_two_points(particleArray[i].x, particleArray[i].y, particleArray[j].x, particleArray[j].y) < 100) {
-                ctx.beginPath()
-                ctx.moveTo(particleArray[i].x, particleArray[i].y)
-                ctx.lineTo(particleArray[j].x, particleArray[j].y)
-                ctx.stroke()
-            }
-        }
-    }
-    requestAnimationFrame(animate)
-}
+// ctx.strokeStyle = "green";
+// ctx.lineWidth = 5;
+// ctx.stroke();
 
+// ctx.fillStyle = "lightgreen";
+// ctx.fill();
 
-animate()
+// ctx.beginPath();
+// ctx.rect(200, 50, 150, 70);
+// ctx.strokeStyle = "blue";
+// ctx.stroke();
+// ctx.fillStyle = "lightblue";
+// ctx.fill();
 
-function distance_between_two_points(x1, y1, x2, y2) {
-    const dx = x2 - x1;
-    const dy = y2 - y1;
-    return Math.sqrt(dx * dx + dy * dy);
-}
+// // 3. Arc
+// let centerX = canvas.width / 2;
+// let centerY = canvas.height / 2;
+
+// ctx.beginPath();
+// ctx.arc(centerX, centerY, 100, 0, Math.PI * 2);
+// ctx.lineWidth = 5;
+// ctx.strokeStyle = "blue";
+// ctx.stroke();
+// ctx.fillStyle = "lightblue";
+// ctx.fill();
+
+// // 4. Text
+// ctx.font = "bold 30px Cambria";
+// ctx.fillStyle = "red";
+// ctx.fillText("Canvas is awesome", 100, 50);
+
+// ctx.font = "italic 30px Comic Sans MS";
+// ctx.lineWidth = 2;
+// ctx.strokeStyle = "blue";
+// ctx.strokeText("Canvas is stupid", 100, 150);
+
+// // 5. Image
+
+// function load_image(path) {
+//   let image = new Image();
+//   image.src = path;
+
+//   image.onload = () => {
+//     let aspectRatio = image.width / image.height;
+//     let imageHeight = 200;
+//     let imageWidth = aspectRatio * imageHeight;
+
+//     ctx.clearRect(0, 0, canvas.width, canvas.height);
+//     ctx.drawImage(image, 20, 80, imageWidth, imageHeight);
+//   };
+// }
+
+// load_image("images/Run (1).png");
+
+// // 6. Animation
+// let frame = 0;
+// let charFrame;
+// let factor = 5;
+
+// function animate() {
+//   frame = (frame + 1) % (8 * factor);
+//   charFrame = Math.floor(frame / factor) + 1;
+
+//   load_image(`images/Run (${charFrame}).png`);
+
+//   requestAnimationFrame(animate);
+// }
+
+// animate();
